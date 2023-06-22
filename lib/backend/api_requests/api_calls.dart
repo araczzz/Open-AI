@@ -16,51 +16,7 @@ class OpenAIChatGPTGroup {
   static Map<String, String> headers = {
     'Content-Type': 'application/json',
   };
-  static SendFullPromptCall sendFullPromptCall = SendFullPromptCall();
   static SendPromptCall sendPromptCall = SendPromptCall();
-}
-
-class SendFullPromptCall {
-  Future<ApiCallResponse> call({
-    String? apiKey = '',
-    dynamic? promptJson,
-  }) {
-    final prompt = _serializeJson(promptJson);
-    final body = '''
-{
-  "model": "gpt-3.5-turbo",
-  "messages": ${prompt}
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'Send Full Prompt',
-      apiUrl: '${OpenAIChatGPTGroup.baseUrl}/chat/completions',
-      callType: ApiCallType.POST,
-      headers: {
-        ...OpenAIChatGPTGroup.headers,
-        'Authorization': 'Bearer ${apiKey}',
-      },
-      params: {},
-      body: body,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-    );
-  }
-
-  dynamic createdTimestamp(dynamic response) => getJsonField(
-        response,
-        r'''$.created''',
-      );
-  dynamic role(dynamic response) => getJsonField(
-        response,
-        r'''$.choices[:].message.role''',
-      );
-  dynamic content(dynamic response) => getJsonField(
-        response,
-        r'''$.choices[:].message.content''',
-      );
 }
 
 class SendPromptCall {

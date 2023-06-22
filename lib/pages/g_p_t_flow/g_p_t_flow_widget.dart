@@ -54,7 +54,7 @@ class _GPTFlowWidgetState extends State<GPTFlowWidget> {
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: Color(0x53B4AACC),
         body: SafeArea(
           top: true,
           child: Container(
@@ -115,7 +115,7 @@ class _GPTFlowWidgetState extends State<GPTFlowWidget> {
                                       child: Stack(
                                         children: [
                                           Image.asset(
-                                            'assets/images/logo_fill@3x.png',
+                                            'assets/images/Logo.png',
                                             width: 50.0,
                                             fit: BoxFit.fitHeight,
                                           ),
@@ -604,13 +604,8 @@ class _GPTFlowWidgetState extends State<GPTFlowWidget> {
                                                 _model.textController.text));
                                   });
                                   _model.chatGPTResponse =
-                                      await OpenAIChatGPTGroup
-                                          .sendFullPromptCall
-                                          .call(
-                                    apiKey:
-                                        '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',
-                                    promptJson: _model.chatHistory,
-                                  );
+                                      await OpenAIChatGPTGroup.sendPromptCall
+                                          .call();
                                   if ((_model.chatGPTResponse?.succeeded ??
                                       true)) {
                                     setState(() {
